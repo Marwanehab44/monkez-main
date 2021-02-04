@@ -32,21 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
               backgroundColor: Colors.red[900],
             ),
             Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height *0.9,
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(top: 490).add(
-                EdgeInsets.symmetric(
-                  horizontal: 145,
-                ),
-              ),
               child: TweenAnimationBuilder(
                 duration: Duration(seconds: 4),
-                child: Text(
-                  'Stay Safe',
-                  style: GoogleFonts.orbitron(
-                    fontSize: 18,
-                    color: Colors.white,
-                    wordSpacing: 3,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    'Stay Safe',
+                    style: GoogleFonts.orbitron(
+                      fontSize: 18,
+                      color: Colors.white,
+                      wordSpacing: 3,
+                    ),
                   ),
                 ),
                 tween: Tween<double>(begin: 0, end: 1),
