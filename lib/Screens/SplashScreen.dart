@@ -16,42 +16,38 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           children: [
             SplashScreenView(
-      home: Home(),
-      duration: 5000 ,
-      imageSize: 150,
-      imageSrc: "assets/images/ambulance.png",
-      text: "MONKIEZ",
-      textType: TextType.TyperAnimatedText,
-      textStyle: TextStyle(
-        fontSize: 30.0,
-        letterSpacing: 5
-      
-      ),
-      
-      colors: [
-        Colors.white,
-        Colors.black,
-        Colors.white,
-        Colors.black,
-      ],
-      backgroundColor: Colors.red[900],
-    ),
-         AnimatedPositioned(
-              duration: Duration(seconds: 2),
-              bottom: 50,
-              right: 30,
-              left: 155,
-              top: 440,
+              home: Home(),
+              duration: 5000,
+              imageSize: 150,
+              imageSrc: "assets/images/ambulance.png",
+              text: "MONKIEZ",
+              textType: TextType.TyperAnimatedText,
+              textStyle: TextStyle(fontSize: 30.0, letterSpacing: 5),
+              colors: [
+                Colors.white,
+                Colors.black,
+                Colors.white,
+                Colors.black,
+              ],
+              backgroundColor: Colors.red[900],
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(top: 490).add(
+                EdgeInsets.symmetric(
+                  horizontal: 145,
+                ),
+              ),
               child: TweenAnimationBuilder(
                 duration: Duration(seconds: 4),
                 child: Text(
                   'Stay Safe',
                   style: GoogleFonts.orbitron(
-                      fontSize: 18,
-                      color: Colors.white,
-                      wordSpacing: 3,
-                      //letterSpacing: 
-                      ),
+                    fontSize: 18,
+                    color: Colors.white,
+                    wordSpacing: 3,
+                  ),
                 ),
                 tween: Tween<double>(begin: 0, end: 1),
                 builder: (BuildContext context, double _val, Widget child) {
@@ -61,8 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   );
                 },
               ),
-            ),  
-            
+            ),
           ],
         ),
       ),
