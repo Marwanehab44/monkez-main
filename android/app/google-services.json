@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "807828834284",
+    "project_id": "monkiz-6b0df",
+    "storage_bucket": "monkiz-6b0df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807828834284:android:19a6bcb25fbe0fc45662c9",
+        "android_client_info": {
+          "package_name": "com.example.monkez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807828834284-ktds3352f0us4a65fanvq6mfmqo3f3k6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKtXJH7zDP6j9dvwUazLSyK5-HjT0wxj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807828834284-ktds3352f0us4a65fanvq6mfmqo3f3k6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

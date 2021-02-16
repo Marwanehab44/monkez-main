@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monkez/Screens/Home.dart';
+import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,26 +16,24 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           children: [
             SplashScreenView(
-              home: Home(),
+              home: AuthScreen(),
               duration: 5000,
               imageSize: 150,
               imageSrc: "assets/images/ambulance.png",
-              text: "MONKIEZ",
+              text: "MONKIZ",
               textType: TextType.TyperAnimatedText,
-              textStyle: TextStyle(fontSize: 30.0, letterSpacing: 5),
-              colors: [
-                Colors.white,
-                Colors.black,
-                Colors.white,
-                Colors.black,
-              ],
+              textStyle: TextStyle(
+                fontSize: 30.0,
+                letterSpacing: 5,
+                color: Colors.black
+              ),
               backgroundColor: Colors.red[900],
             ),
             Container(
-              height: MediaQuery.of(context).size.height *0.9,
+              height: MediaQuery.of(context).size.height * 0.7,
               width: MediaQuery.of(context).size.width,
               child: TweenAnimationBuilder(
-                duration: Duration(seconds: 4),
+                duration: Duration(seconds: 6),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
@@ -43,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     style: GoogleFonts.orbitron(
                       fontSize: 18,
                       color: Colors.white,
-                      wordSpacing: 3,
+                      wordSpacing: 1,
                     ),
                   ),
                 ),
