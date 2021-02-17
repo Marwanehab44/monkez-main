@@ -17,6 +17,7 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   bool loginMood;
+  TextEditingController controller;
   bool hidePass, hideConfirmPass, loading;
   GlobalKey<FormState> form;
   double height;
@@ -33,7 +34,9 @@ class _AuthFormState extends State<AuthForm> {
     height = 0;
     hidePass = hideConfirmPass = true;
     loading = false;
+    controller = TextEditingController();
   }
+  
 
   void showErorr(String erorr) {
     Scaffold.of(context).showSnackBar(
@@ -71,6 +74,7 @@ class _AuthFormState extends State<AuthForm> {
           default:
             showErorr('user-not-found.');
         }
+      // ignore: unused_catch_clause
       } on SocketException catch (erorr) {
         setState(() {
           loading = false;
@@ -92,25 +96,8 @@ class _AuthFormState extends State<AuthForm> {
         );
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         print('printed');
-      } on FirebaseAuthException catch (e) {
-        setState(() {
-          loading = false;
-        });
-        switch (e.code) {
-          case 'email-already-in-use.':
-            showErorr('this email already in use');
-            break;
-          case 'invalid-email':
-            showErorr('invalid email');
-            break;
-          default:
-            showErorr('weak password');
-        }
-      } on SocketException catch (erorr) {
-        setState(() {
-          loading = false;
-        });
-        showErorr('Network Erorr');
+      } catch (e) {
+        showErorr('email already in use.');
       }
     }
   }
@@ -145,11 +132,6 @@ class _AuthFormState extends State<AuthForm> {
                     children: [
                       TextFormField(
                         key: fieldkey,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (value) {
-                          passwordNode.requestFocus();
-                        },
                         validator: (value) {
                           setState(() {
                             email = value;
@@ -175,14 +157,7 @@ class _AuthFormState extends State<AuthForm> {
                         ),
                       ),
                       TextFormField(
-                        textInputAction: (loginMood)
-                            ? TextInputAction.done
-                            : TextInputAction.next,
-                        onFieldSubmitted: (value) {
-                          if (!loginMood) {
-                            confirmPasswordNode.requestFocus();
-                          }
-                        },
+                        controller: controller,
                         validator: (value) {
                           setState(() {
                             password = value;
@@ -229,11 +204,12 @@ class _AuthFormState extends State<AuthForm> {
                           duration: Duration(milliseconds: 600),
                           opacity: (loginMood) ? 0 : 1,
                           child: TextFormField(
+                            controller: controller,
                             validator: (value) {
                               setState(() {
                                 confirmpassword = value;
                               });
-                              if (value == password) {
+                              if (loginMood || value == password) {
                                 return null;
                               }
                               return 'Passwords don\'t match';
