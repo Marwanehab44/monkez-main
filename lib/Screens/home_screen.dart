@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
           FirebaseAuth.instance.signOut();
           Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
         },
-        child: Text('logout'),
+        child: Center(child: Text('logout')),
       ),
     );
   }

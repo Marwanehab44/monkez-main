@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
+import 'package:monkez/Screens/Collecting_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/home_screen.dart';
 
@@ -26,15 +27,14 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SplashScreen();
           } else {
-           
-              return SplashScreen();
-            
+            return SplashScreen();
           }
         },
       ),
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        CollectingData.routeName: (context) => CollectingData(),
       },
     );
   }

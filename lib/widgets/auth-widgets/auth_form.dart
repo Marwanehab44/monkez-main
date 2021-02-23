@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:monkez/Screens/home_screen.dart';
+import 'package:monkez/Screens/Collecting_Screen.dart';
 import 'package:monkez/widgets/auth-widgets/auth_title.dart';
 
 class AuthForm extends StatefulWidget {
@@ -16,25 +17,30 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+   FocusNode passwordNode;
+   FocusNode confirmPasswordNode;
   bool loginMood;
-  TextEditingController controller;
+  TextEditingController controller1;
+   TextEditingController controller2;
   bool hidePass, hideConfirmPass, loading;
   GlobalKey<FormState> form;
   double height;
   GlobalKey fieldkey;
-  FocusNode passwordNode, confirmPasswordNode;
+
   String email, password, confirmpassword;
   @override
   void initState() {
     super.initState();
     loginMood = true;
-    passwordNode = confirmPasswordNode = FocusNode();
+    passwordNode  = FocusNode();
+    confirmPasswordNode= FocusNode();
     form = GlobalKey<FormState>();
     fieldkey = GlobalKey();
     height = 0;
     hidePass = hideConfirmPass = true;
     loading = false;
-    controller = TextEditingController();
+    controller1 = TextEditingController();
+    controller2 = TextEditingController();
   }
   
 
@@ -53,10 +59,10 @@ class _AuthFormState extends State<AuthForm> {
         loading = true;
       });
       try {
-        print('enterd');
+        print('entered');
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(CollectingData.routeName);
       } on FirebaseException catch (e) {
         setState(() {
           loading = false;
@@ -94,7 +100,7 @@ class _AuthFormState extends State<AuthForm> {
           email: email,
           password: password,
         );
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(CollectingData.routeName);
         print('printed');
       } catch (e) {
         showErorr('email already in use.');
@@ -104,6 +110,8 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -132,6 +140,11 @@ class _AuthFormState extends State<AuthForm> {
                     children: [
                       TextFormField(
                         key: fieldkey,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (value){
+                          passwordNode.requestFocus();
+                        },
+                        keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           setState(() {
                             email = value;
@@ -157,7 +170,13 @@ class _AuthFormState extends State<AuthForm> {
                         ),
                       ),
                       TextFormField(
-                        controller: controller,
+                        controller: controller1,
+                        textInputAction: (loginMood)?TextInputAction.done:TextInputAction.next,
+                        onFieldSubmitted: (value){
+                         if(!loginMood){
+                           confirmPasswordNode.requestFocus();
+                         }
+                        },
                         validator: (value) {
                           setState(() {
                             password = value;
@@ -204,7 +223,7 @@ class _AuthFormState extends State<AuthForm> {
                           duration: Duration(milliseconds: 600),
                           opacity: (loginMood) ? 0 : 1,
                           child: TextFormField(
-                            controller: controller,
+                            controller: controller2,
                             validator: (value) {
                               setState(() {
                                 confirmpassword = value;
