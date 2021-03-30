@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
@@ -13,6 +15,8 @@ class CollectingData extends StatefulWidget {
 }
 
 class _CollectingDataState extends State<CollectingData> {
+  String name, number;
+  File pickedImage;
   PageController controller;
 
   @override
@@ -27,6 +31,9 @@ class _CollectingDataState extends State<CollectingData> {
     super.dispose();
   }
 
+  void submit(){
+
+  }
   Future<bool> logout() async {
     bool action = await showDialog(
       context: context,
@@ -64,9 +71,16 @@ class _CollectingDataState extends State<CollectingData> {
     );
     return action;
   }
-void nextPage(){
+
+  void nextPage(File image, String userName, String mobNum) {
+    setState(() {
+      this.pickedImage = image;
+      this.name = userName;
+      this.number = mobNum;
+    });
     controller.nextPage(duration: Duration(seconds: 1), curve: Curves.linear);
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -83,6 +97,7 @@ void nextPage(){
       },
       child: Scaffold(
         body: Container(
+          color: Colors.pink[100],
           height: height,
           width: width,
           child: SingleChildScrollView(
@@ -103,8 +118,8 @@ void nextPage(){
                   controller: controller,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
-                    CollectingFirst(logout,nextPage),
-                    CollectingSecond(),
+                    CollectingFirst(logout, nextPage),
+                    CollectingSecond(pickedImage,name,number),
                   ],
                 ),
               ),

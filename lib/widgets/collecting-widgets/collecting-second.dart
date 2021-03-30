@@ -1,12 +1,15 @@
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:monkez/Screens/Auth_screen.dart';
+import 'package:monkez/Screens/home_screen.dart';
+import 'package:monkez/misc/Image_Frame.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting_data_title.dart';
 
-class CollectingSecond extends StatefulWidget {
-  @override
-  _CollectingSecondState createState() => _CollectingSecondState();
-}
-
-class _CollectingSecondState extends State<CollectingSecond> {
+class CollectingSecond extends StatelessWidget {
+  final File image;
+  final String name,num;
+  CollectingSecond(this.image,this.name,this.num);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,10 +22,64 @@ class _CollectingSecondState extends State<CollectingSecond> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CollectingDataTitle(
-                  "One Step Left",
-                  "Select your current location ",
+                  "Finally Done",
+                  "Is everything okay ? ",
                 ),
-
+                SizedBox(
+                  height: 50,
+                ),
+                ImageFrame.fromFile(image),
+                SizedBox(
+                  height: 50,
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 8,
+                  child: ListTile(
+                    leading: Text(
+                      'Name : ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'AkayaKanadaka',
+                      ),
+                    ),
+                    title: Text(name),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 8,
+                  child: ListTile(
+                    leading: Text(
+                      'E-mail : ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'AkayaKanadaka',
+                      ),
+                    ),
+                    title: Text(FirebaseAuth.instance.currentUser.email),
+                  ),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 8,
+                  child: ListTile(
+                    leading: Text(
+                      'Mobile Number : ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'AkayaKanadaka',
+                      ),
+                    ),
+                    title: Text(num),
+                  ),
+                ),
                 Expanded(
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -44,7 +101,13 @@ class _CollectingSecondState extends State<CollectingSecond> {
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AuthScreen()),
+                            );
+                          },
                         ),
                         FlatButton(
                           shape: BeveledRectangleBorder(
@@ -61,7 +124,14 @@ class _CollectingSecondState extends State<CollectingSecond> {
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

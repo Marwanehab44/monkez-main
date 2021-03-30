@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
@@ -6,19 +7,25 @@ import 'package:monkez/misc/Image_Frame.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting_data_title.dart';
 
 class CollectingFirst extends StatefulWidget {
-  final Function logout,nextPage;
-  CollectingFirst(this.logout,this.nextPage);
+  final Function logout, nextPage;
+
+  CollectingFirst(this.logout, this.nextPage);
+
   @override
   _CollectingFirstState createState() => _CollectingFirstState();
 }
 
 class _CollectingFirstState extends State<CollectingFirst> {
   File image;
+  String userName, mobileNumber;
+  bool isNull;
   FocusNode mobileNode;
+
   @override
   void initState() {
     super.initState();
     mobileNode = FocusNode();
+    isNull = true;
   }
 
   void pickImage(bool fromGallery) async {
@@ -32,12 +39,23 @@ class _CollectingFirstState extends State<CollectingFirst> {
     }
   }
 
+  bool validData() {
+    bool valid = true;
+    if (image == null) valid = false;
+    if (userName == null || userName.length < 3) valid = false;
+    if (mobileNumber == null ||
+        mobileNumber.length != 11 ||
+        !mobileNumber.startsWith('01')) valid = false;
+
+    return valid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-               flex: 9,
+            flex: 9,
             child: Padding(
               padding: EdgeInsets.only(top: 10),
               child: Column(
@@ -103,6 +121,13 @@ class _CollectingFirstState extends State<CollectingFirst> {
                     height: 15,
                   ),
                   TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        userName = value;
+                      });
+                    },
+                    maxLines: 1,
+                    maxLength: 15,
                     textInputAction: TextInputAction.next,
                     onSubmitted: (value) => mobileNode.requestFocus(),
                     decoration: InputDecoration(
@@ -121,6 +146,11 @@ class _CollectingFirstState extends State<CollectingFirst> {
                         hintText: 'example: Mohamed '),
                   ),
                   TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        mobileNumber = value;
+                      });
+                    },
                     focusNode: mobileNode,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -145,7 +175,8 @@ class _CollectingFirstState extends State<CollectingFirst> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FlatButton(
+              RaisedButton(
+                elevation: 5,
                 shape: BeveledRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
@@ -167,7 +198,8 @@ class _CollectingFirstState extends State<CollectingFirst> {
                   }
                 },
               ),
-              FlatButton(
+              RaisedButton(
+                elevation: 5,
                 shape: BeveledRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(30),
@@ -183,7 +215,25 @@ class _CollectingFirstState extends State<CollectingFirst> {
                   ),
                 ),
                 onPressed: () {
-                  widget.nextPage();
+                  if (validData()) {
+                    widget.nextPage(image, userName, mobileNumber);
+                  } else {
+                    showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        title: Text('Invalid or Missing Data'),
+                        content: Text(
+                            'Please check that you have picked an Image , and the user name has at least 3 character or more and you enter a valid number'),
+                        actions: [
+                          FlatButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Ok')),
+                        ],
+                      ),
+                    );
+                  }
                 },
               ),
             ],

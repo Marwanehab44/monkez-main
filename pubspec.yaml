@@ -32,6 +32,7 @@ dependencies:
   email_validator: ^1.0.6
   page_indicator: ^0.3.0
   image_picker: ^0.6.7+22
+  provider: ^4.3.2+3
 
 
 
@@ -59,6 +60,7 @@ flutter:
     - assets/images/ambulance.png
     - assets/images/19181.png
     - assets/images/Medicaid-Hospital-Emergency.jpg
+    - assets/images/homeScreenAmbulance.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -75,6 +77,9 @@ flutter:
     - family: AkayaKanadaka
       fonts:
         - asset: assets/Fonts/AkayaKanadaka.ttf
-  #
+    - family: Quicksand
+      fonts:
+        - asset: assets/Fonts/Quicksand.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
