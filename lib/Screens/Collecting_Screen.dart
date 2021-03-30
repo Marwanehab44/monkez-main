@@ -97,7 +97,6 @@ class _CollectingDataState extends State<CollectingData> {
       },
       child: Scaffold(
         body: Container(
-          color: Colors.pink[100],
           height: height,
           width: width,
           child: SingleChildScrollView(
