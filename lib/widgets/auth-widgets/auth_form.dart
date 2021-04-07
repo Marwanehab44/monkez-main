@@ -1,39 +1,41 @@
-import 'dart:io';
-
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
+import 'package:monkez/Screens/Transit_Screen.dart';
 import 'package:monkez/widgets/auth-widgets/auth_title.dart';
+import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   final Function resetPassword;
+
   AuthForm(this.resetPassword);
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
 
 class _AuthFormState extends State<AuthForm> {
-   FocusNode passwordNode;
-   FocusNode confirmPasswordNode;
+  FocusNode passwordNode;
+  FocusNode confirmPasswordNode;
   bool loginMood;
   TextEditingController controller1;
-   TextEditingController controller2;
+  TextEditingController controller2;
   bool hidePass, hideConfirmPass, loading;
   GlobalKey<FormState> form;
   double height;
   GlobalKey fieldkey;
 
   String email, password, confirmpassword;
+
   @override
   void initState() {
     super.initState();
     loginMood = true;
-    passwordNode  = FocusNode();
-    confirmPasswordNode= FocusNode();
+    passwordNode = FocusNode();
+    confirmPasswordNode = FocusNode();
     form = GlobalKey<FormState>();
     fieldkey = GlobalKey();
     height = 0;
@@ -42,7 +44,6 @@ class _AuthFormState extends State<AuthForm> {
     controller1 = TextEditingController();
     controller2 = TextEditingController();
   }
-  
 
   void showErorr(String erorr) {
     Scaffold.of(context).showSnackBar(
@@ -58,34 +59,15 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         loading = true;
       });
-      try {
-        print('entered');
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
-        Navigator.of(context).pushReplacementNamed(CollectingData.routeName);
-      } on FirebaseException catch (e) {
+      String error = await Provider.of<UserProvider>(context, listen: false)
+          .login(email, password);
+      if (error == null) {
+        Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+      } else {
         setState(() {
           loading = false;
         });
-        switch (e.code) {
-          case 'wrong-password':
-            showErorr('wrong password.');
-            break;
-          case 'invalid-email':
-            showErorr('invalid email.');
-            break;
-          case 'user-disabled':
-            showErorr('This user has been disabled.');
-            break;
-          default:
-            showErorr('user-not-found.');
-        }
-      // ignore: unused_catch_clause
-      } on SocketException catch (erorr) {
-        setState(() {
-          loading = false;
-        });
-        showErorr('Network Erorr');
+        showErorr(error);
       }
     }
   }
@@ -95,23 +77,21 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         loading = true;
       });
-      try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        Navigator.of(context).pushReplacementNamed(CollectingData.routeName);
-        print('printed');
-      } catch (e) {
-        showErorr('email already in use.');
+      String error = await Provider.of<UserProvider>(context, listen: false)
+          .register(email, password);
+      if (error == null) {
+        Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+      } else {
+        setState(() {
+          loading = false;
+        });
+        showErorr(error);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -141,7 +121,7 @@ class _AuthFormState extends State<AuthForm> {
                       TextFormField(
                         key: fieldkey,
                         textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (value){
+                        onFieldSubmitted: (value) {
                           passwordNode.requestFocus();
                         },
                         keyboardType: TextInputType.emailAddress,
@@ -171,11 +151,13 @@ class _AuthFormState extends State<AuthForm> {
                       ),
                       TextFormField(
                         controller: controller1,
-                        textInputAction: (loginMood)?TextInputAction.done:TextInputAction.next,
-                        onFieldSubmitted: (value){
-                         if(!loginMood){
-                           confirmPasswordNode.requestFocus();
-                         }
+                        textInputAction: (loginMood)
+                            ? TextInputAction.done
+                            : TextInputAction.next,
+                        onFieldSubmitted: (value) {
+                          if (!loginMood) {
+                            confirmPasswordNode.requestFocus();
+                          }
                         },
                         validator: (value) {
                           setState(() {
@@ -274,7 +256,7 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
               if (loginMood)
                 Align(
@@ -293,7 +275,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                 ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.065,
+                height: MediaQuery.of(context).size.height * 0.070,
                 width: double.infinity,
                 child: RaisedButton(
                   shape: StadiumBorder(),

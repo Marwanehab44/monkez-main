@@ -2,14 +2,20 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
-import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/misc/Image_Frame.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting_data_title.dart';
 
-class CollectingSecond extends StatelessWidget {
+class CollectingSecond extends StatefulWidget {
+  final Function submit;
   final File image;
   final String name,num;
-  CollectingSecond(this.image,this.name,this.num);
+  CollectingSecond(this.image,this.name,this.num,this.submit);
+
+  @override
+  _CollectingSecondState createState() => _CollectingSecondState();
+}
+
+class _CollectingSecondState extends State<CollectingSecond> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +34,7 @@ class CollectingSecond extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                ImageFrame.fromFile(image),
+                ImageFrame.fromFile(widget.image),
                 SizedBox(
                   height: 50,
                 ),
@@ -45,7 +51,7 @@ class CollectingSecond extends StatelessWidget {
                         fontFamily: 'AkayaKanadaka',
                       ),
                     ),
-                    title: Text(name),
+                    title: Text(widget.name),
                   ),
                 ),
                 Card(
@@ -77,7 +83,7 @@ class CollectingSecond extends StatelessWidget {
                         fontFamily: 'AkayaKanadaka',
                       ),
                     ),
-                    title: Text(num),
+                    title: Text(widget.num),
                   ),
                 ),
                 Expanded(
@@ -125,12 +131,7 @@ class CollectingSecond extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
-                              ),
-                            );
+                            widget.submit();
                           },
                         ),
                       ],

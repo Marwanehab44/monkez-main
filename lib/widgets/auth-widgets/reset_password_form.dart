@@ -1,13 +1,16 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:monkez/Providers/user_Provider.dart';
+import 'package:provider/provider.dart';
 
 import 'auth_title.dart';
 
 class ResetPasswordForm extends StatefulWidget {
   final Function resetPassword;
+
   ResetPasswordForm(this.resetPassword);
+
   @override
   _ResetPasswordFormState createState() => _ResetPasswordFormState();
 }
@@ -16,6 +19,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   GlobalKey<FormState> form;
   String email;
   bool loading;
+
   @override
   void initState() {
     super.initState();
@@ -37,19 +41,17 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       setState(() {
         loading = true;
       });
-      try {
-        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      String error = await Provider.of<UserProvider>(context, listen: false)
+          .restPassword(email);
+      if (error==null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text('Email has been sent.'),
           ),
         );
-      } on FirebaseException catch (e) {
-        showErorr('Erorr has occurred');
+      }  else{
+       showErorr('Erorr has occurred');
       }
-      setState(() {
-        loading = false;
-      });
     }
   }
 

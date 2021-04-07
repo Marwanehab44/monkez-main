@@ -220,12 +220,12 @@ class _CollectingFirstState extends State<CollectingFirst> {
                   } else {
                     showDialog(
                       context: context,
-                      child: AlertDialog(
+                      builder: (BuildContext context) => AlertDialog(
                         title: Text('Invalid or Missing Data'),
                         content: Text(
                             'Please check that you have picked an Image , and the user name has at least 3 character or more and you enter a valid number'),
                         actions: [
-                          FlatButton(
+                          TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },

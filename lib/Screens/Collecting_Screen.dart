@@ -1,11 +1,13 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
+import 'package:monkez/Screens/Transit_Screen.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting-first.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting-second.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:provider/provider.dart';
 
 class CollectingData extends StatefulWidget {
   static const String routeName = '/collecting';
@@ -18,11 +20,13 @@ class _CollectingDataState extends State<CollectingData> {
   String name, number;
   File pickedImage;
   PageController controller;
+  bool loading;
 
   @override
   void initState() {
     super.initState();
     controller = PageController();
+    loading = false;
   }
 
   @override
@@ -31,13 +35,39 @@ class _CollectingDataState extends State<CollectingData> {
     super.dispose();
   }
 
-  void submit(){
-
+  void submit() async {
+    setState(() {
+      loading = true;
+    });
+    bool error = await Provider.of<UserProvider>(context, listen: false)
+        .updateProfile(pickedImage, name, number);
+    if (!error) {
+      setState(() {
+        loading = false;
+      });
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error has occurred'),
+          content: Text('Please try again later'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Ok')),
+          ],
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+    }
   }
+
   Future<bool> logout() async {
     bool action = await showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (BuildContext context) => AlertDialog(
         title: Text('Are you sure ?'),
         content: Text(
           'by logging out you will be asked the same information in your next login',
@@ -96,34 +126,47 @@ class _CollectingDataState extends State<CollectingData> {
         return false;
       },
       child: Scaffold(
-        body: Container(
-          height: height,
-          width: width,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(20, 30, 20, 5),
-            child: Container(
-              height: height - MediaQuery.of(context).padding.top - 20,
+        body: Stack(
+          children: [
+            Container(
+              height: height,
               width: width,
-              child: PageIndicatorContainer(
-                length: 2,
-                padding: EdgeInsets.only(bottom: 30),
-                indicatorColor: Colors.grey,
-                indicatorSelectorColor: Colors.black,
-                shape: IndicatorShape.roundRectangleShape(
-                  size: Size(20, 5),
-                  cornerSize: Size.square(20),
-                ),
-                child: PageView(
-                  controller: controller,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    CollectingFirst(logout, nextPage),
-                    CollectingSecond(pickedImage,name,number),
-                  ],
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(20, 30, 20, 5),
+                child: Container(
+                  height: height - MediaQuery.of(context).padding.top - 20,
+                  width: width,
+                  child: PageIndicatorContainer(
+                    length: 2,
+                    padding: EdgeInsets.only(bottom: 30),
+                    indicatorColor: Colors.grey,
+                    indicatorSelectorColor: Colors.black,
+                    shape: IndicatorShape.roundRectangleShape(
+                      size: Size(20, 5),
+                      cornerSize: Size.square(20),
+                    ),
+                    child: PageView(
+                      controller: controller,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        CollectingFirst(logout, nextPage),
+                        CollectingSecond(pickedImage, name, number, submit),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+            if (loading)
+              Container(
+                height: height,
+                width: width,
+                color: Colors.black26,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+          ],
         ),
       ),
     );

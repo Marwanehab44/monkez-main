@@ -24,15 +24,18 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  font_awesome_flutter: ^8.11.0
+  font_awesome_flutter: ^9.0.0
   splash_screen_view: ^1.0.3
-  google_fonts: ^1.1.2
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.0+1
+  google_fonts: ^2.0.0
+  firebase_core: ^1.0.2
+  firebase_auth: ^1.0.1
   email_validator: ^1.0.6
   page_indicator: ^0.3.0
-  image_picker: ^0.6.7+22
+  image_picker: ^0.7.4
   provider: ^4.3.2+3
+  cloud_firestore: ^1.0.3
+  firebase_storage: ^8.0.1
+  flutter_gradient_colors: ^1.0.0
 
 
 

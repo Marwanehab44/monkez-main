@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:monkez/Screens/Map-Screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = 'home-screen';
@@ -24,7 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.pink[100],
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: GradientColors.piggyPink,
+                stops: [0.3, 0.9]),
+          ),
           child: Column(
             children: [
               Padding(
@@ -52,9 +60,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Quicksand'),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               InkWell(
-                onTap: (){},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => MapScreen()));
+                },
                 child: Card(
                   color: Colors.red[900],
                   elevation: 10,
