@@ -36,6 +36,8 @@ dependencies:
   cloud_firestore: ^1.0.3
   firebase_storage: ^8.0.1
   flutter_gradient_colors: ^1.0.0
+  flutter_credit_card: ^2.0.0
+
 
 
 

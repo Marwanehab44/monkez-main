@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
+import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/home_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -49,8 +50,14 @@ class MainDrawer extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, HomeScreen.routeName);
                   },
-                  title: Text('Home',style: TextStyle(fontSize: 18),),
-                  trailing: Icon(Icons.home,color: Colors.black,),
+                  title: Text(
+                    'Home',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  trailing: Icon(
+                    Icons.home,
+                    color: Colors.black,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -58,8 +65,28 @@ class MainDrawer extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, AuthScreen.routeName);
                   },
-                  title: Text('Log out',style: TextStyle(fontSize: 18),),
-                  trailing: Icon(Icons.exit_to_app,color: Colors.black,),
+                  title: Text(
+                    'Log out',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  trailing: Icon(
+                    Icons.exit_to_app,
+                    color: Colors.black,
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, PaymentScreen.routeName);
+                  },
+                  title: Text(
+                    'Payment',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  trailing: Icon(
+                    Icons.attach_money,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),

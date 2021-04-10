@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
+import 'package:monkez/Screens/Exisiting_Card.dart';
 import 'package:monkez/Screens/Map-Screen.dart';
+import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
 import 'package:monkez/Screens/home_screen.dart';
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => UserProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Monkz',
         theme: ThemeData(
           primaryColor: Colors.red,
@@ -47,6 +50,8 @@ class MyApp extends StatelessWidget {
           CollectingData.routeName: (context) => CollectingData(),
           TransitScreen.routName: (context) => TransitScreen(),
           MapScreen.routeName: (context) => MapScreen(),
+          PaymentScreen.routeName: (context) => PaymentScreen(),
+          ExisitingCard.routeName: (context) => ExisitingCard(),
         },
       ),
     );
