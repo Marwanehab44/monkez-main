@@ -42,7 +42,7 @@ class _ExisitingCardState extends State<ExisitingCard> {
       body: SafeArea(
         child: Container(
           height: double.infinity,
-          width: double.infinity,
+          width: double.infinity  ,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -51,6 +51,7 @@ class _ExisitingCardState extends State<ExisitingCard> {
                 stops: [0.3, 0.9]),
           ),
           child: Expanded(
+            flex: 1,
             child: SingleChildScrollView(
               child: Column(
                 children: [
