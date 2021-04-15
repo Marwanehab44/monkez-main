@@ -14,6 +14,13 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   var _value = false;
   var _value2 = false;
+  bool checked;
+
+  @override
+  void initState() {
+    super.initState();
+    checked = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,94 +38,73 @@ class _PaymentScreenState extends State<PaymentScreen> {
             padding: EdgeInsets.all(25.0),
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {},
-                  child: CheckboxListTile(
-                    title: Text(
-                      'Pay via credit card',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Quicksand',
-                      ),
-                    ),
-                    secondary: Icon(
-                      Icons.credit_card,
-                      color: Colors.blue[900],
-                    ),
-                    value: _value,
-                    onChanged: (value) {
-                      setState(() {
-                        _value = value;
-                      });
-                    },
-                  ),
-                ),
-                Divider(
-                  color: Colors.black,
-                  thickness: 2,
-                ),
-                InkWell(
-                  child: CheckboxListTile(
-                    title: Text(
-                      'Cash',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Quicksand',
-                      ),
-                    ),
-                    secondary: Icon(
-                      Icons.attach_money,
-                      color: Colors.green,
-                    ),
-                    value: _value2,
-                    onChanged: (value) {
-                      setState(() {
-                        _value2 = value;
-                      });
-                    },
+                Text(
+                  "Please choose the method that you want",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Quicksand',
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: 200,
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_value2) {
-                        Navigator.pushReplacementNamed(
-                            context, MapScreen.routeName);
-                      } else {
-                        Navigator.pushReplacementNamed(
-                            context, ExisitingCard.routeName);
-                      }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text(
-                        'Next',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Quicksand',
-                          color: Colors.white,
-                        ),
-                      ),
+                Center(
+                  child: Card(
+                    elevation: 25,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      shadowColor: Colors.pink,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                      primary: Colors.red[900],
-                      elevation: 7,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(35),
-                      ),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, ExisitingCard.routeName);
+                          },
+                          child: ListTile(
+                            title: Text(
+                              'Pay via credit card',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Quicksand',
+                              ),
+                            ),
+                            leading: Icon(
+                              Icons.credit_card,
+                              color: Colors.blue[900],
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.black,
+                          thickness: 2,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, MapScreen.routeName);
+                          },
+                          child: ListTile(
+                            title: Text(
+                              'Cash',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Quicksand',
+                              ),
+                            ),
+                            leading: Icon(
+                              Icons.attach_money,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                )
               ],
             ),
           )),

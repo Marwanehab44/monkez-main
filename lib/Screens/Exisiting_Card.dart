@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
+import 'package:monkez/Screens/Payment_Screen.dart';
 
 class ExisitingCard extends StatefulWidget {
   static const routeName = '/Exisiting-Card';
@@ -42,7 +43,7 @@ class _ExisitingCardState extends State<ExisitingCard> {
       body: SafeArea(
         child: Container(
           height: double.infinity,
-          width: double.infinity  ,
+          width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -50,8 +51,9 @@ class _ExisitingCardState extends State<ExisitingCard> {
                 colors: GradientColors.piggyPink,
                 stops: [0.3, 0.9]),
           ),
-          child: Expanded(
-            flex: 1,
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -120,7 +122,19 @@ class _ExisitingCardState extends State<ExisitingCard> {
                         print('invalid!');
                       }
                     },
-                  )
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 35,
+                        color: Colors.red[900],
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, PaymentScreen.routeName);
+                      }),
                 ],
               ),
             ),
