@@ -5,7 +5,7 @@ import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/misc/Image_Frame.dart';
 import 'package:monkez/widgets/collecting-widgets/collecting_data_title.dart';
 
-class CollectingSecond extends StatefulWidget {
+class  CollectingSecond extends StatefulWidget {
   final Function submit;
   final File image;
   final String name,num;

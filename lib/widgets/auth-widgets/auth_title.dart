@@ -7,6 +7,7 @@ class AuthTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -16,7 +17,9 @@ class AuthTitle extends StatelessWidget {
             fontSize: 30,
             fontWeight: FontWeight.bold,
             
+            
           ),
+          
         ),
         Text(
           'your Account',

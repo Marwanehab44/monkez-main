@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserProvider with ChangeNotifier {
   Future<String> login(String email, String password) async {
@@ -52,7 +53,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<bool> updateProfile(
-      File image, String userName, String mobileNumber) async {
+      File image, String userName, String mobileNumber,LatLng position,String address) async {
     try {
       String userId = FirebaseAuth.instance.currentUser.uid;
       String email = FirebaseAuth.instance.currentUser.email;
@@ -66,6 +67,9 @@ class UserProvider with ChangeNotifier {
           'username': userName,
           'mobileNumber': mobileNumber,
           'photoUrl': photoUrl,
+          'lat':position.latitude,
+          'lng':position.longitude,
+          'address':address,
         },
       );
       return true;

@@ -37,12 +37,9 @@ dependencies:
   firebase_storage: ^8.0.1
   flutter_gradient_colors: ^1.0.0
   flutter_credit_card: ^2.0.0
-
-
-
-
-
-
+  google_maps_flutter: ^2.0.3
+  location: ^4.1.1
+  geocoder: ^0.2.1
 
 
 dev_dependencies:

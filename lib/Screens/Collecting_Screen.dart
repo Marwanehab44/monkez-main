@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
@@ -17,7 +18,8 @@ class CollectingData extends StatefulWidget {
 }
 
 class _CollectingDataState extends State<CollectingData> {
-  String name, number;
+  String currentAddress,name, number;
+  LatLng currentCoordinates;
   File pickedImage;
   PageController controller;
   bool loading;
@@ -35,12 +37,14 @@ class _CollectingDataState extends State<CollectingData> {
     super.dispose();
   }
 
-  void submit() async {
+  void submit(LatLng pos,String address) async {
     setState(() {
+      currentCoordinates=pos;
+      currentAddress=address;
       loading = true;
     });
     bool error = await Provider.of<UserProvider>(context, listen: false)
-        .updateProfile(pickedImage, name, number);
+        .updateProfile(pickedImage, name, number, currentCoordinates,currentAddress);
     if (!error) {
       setState(() {
         loading = false;
@@ -48,7 +52,7 @@ class _CollectingDataState extends State<CollectingData> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error has occurred'),
+          title: Text('Error has occurred'), 
           content: Text('Please try again later'),
           actions: [
             TextButton(
