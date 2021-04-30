@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:monkez/Screens/Map-Screen.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = 'home-screen';
@@ -37,15 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.all(25.0),
-                child: Container(
-                  margin: EdgeInsets.only(top: 15),
-                  child: Text(
-                    'Monkiz',
-                    style: TextStyle(
-                        color: Colors.red[900],
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Quicksand'),
+                child: Shimmer.fromColors(
+                  baseColor: Colors.red[900],
+                  highlightColor: Colors.white,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 15),
+                    child: Text(
+                      'Monkiz',
+                      style: TextStyle(
+                          color: Colors.red[900],
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Quicksand'),
+                    ),
                   ),
                 ),
               ),

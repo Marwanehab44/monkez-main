@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +9,7 @@ import 'package:geocoder/model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:monkez/Screens/Drawer.dart';
+import 'package:monkez/Screens/Payment_Screen.dart';
 
 class MapScreen extends StatefulWidget {
   static const routeName = '/map-screen';
@@ -20,6 +22,7 @@ class _MapScreenState extends State<MapScreen> {
   bool isloading;
   LatLng currentPosition;
   String currentAdress;
+
   @override
   void initState() {
     super.initState();
@@ -102,58 +105,89 @@ class _MapScreenState extends State<MapScreen> {
               colors: GradientColors.piggyPink,
               stops: [0.3, 0.9]),
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Expanded(
-              flex: 2,
-              child: (isloading)
-                  ? Center(child: CircularProgressIndicator())
-                  : Stack(
-                      children: [
-                        GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: currentPosition,
-                            zoom: 14.5,
-                          ),
-                          myLocationEnabled: true,
-                          onCameraMove: (posision) {
-                            setState(() {
-                              currentPosition = posision.target;
-                            });
-                          },
-                          onCameraIdle: () async {
-                            currentAdress = await getAdress(currentPosition);
-                            setState(() {});
-                          },
+            (isloading)
+                ? Center(child: CircularProgressIndicator())
+                : Stack(
+                    children: [
+                      GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: currentPosition,
+                          zoom: 14.5,
                         ),
-                        Center(
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 35 / 2),
-                            child: Icon(
-                              Icons.place,
-                              size: 35,
-                            ),
+                        myLocationEnabled: true,
+                        onCameraMove: (posision) {
+                          setState(() {
+                            currentPosition = posision.target;
+                          });
+                        },
+                        onCameraIdle: () async {
+                          currentAdress = await getAdress(currentPosition);
+                          setState(() {});
+                        },
+                      ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 35 / 2),
+                          child: Icon(
+                            FontAwesomeIcons.mapPin,
+                            size: 35,
+                            color: Colors.red[900],
                           ),
-                        )
-                      ],
-                    ),
-            ),
-            Expanded(
-              flex: 1,
+                        ),
+                      )
+                    ],
+                  ),
+            Positioned(
+              top: 60,
+              right: 0,
+              left: 0,
               child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: Card(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  elevation: 20,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Address: $currentAdress',
-                      style: TextStyle(decoration: TextDecoration.underline,fontSize: 15),
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                height: 90,
+                //width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Card(
+                    child: ListTile(
+                      trailing: Icon(
+                        FontAwesomeIcons.mapMarkerAlt,
+                        color: Colors.white,
+                      ),
+                      tileColor: Colors.black87,
+                      leading: Text(
+                        'Your Address :',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      title: Text(
+                        '$currentAdress',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: "Quicksand",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 80,
+              left: 50,
+              bottom: 10,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.red[900]),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, PaymentScreen.routeName);
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Text(
+                    'Request',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ),
