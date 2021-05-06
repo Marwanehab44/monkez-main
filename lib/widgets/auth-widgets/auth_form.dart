@@ -101,6 +101,10 @@ class _AuthFormState extends State<AuthForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              SizedBox(
+                height: 50,
+              ),
               AnimatedSwitcher(
                 duration: Duration(milliseconds: 500),
                 child: (loginMood)
