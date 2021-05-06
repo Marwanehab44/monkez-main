@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
@@ -8,8 +8,11 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Drawer.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
+import 'package:monkez/Screens/Transit_Screen.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   static const routeName = '/map-screen';
@@ -21,7 +24,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   bool isloading;
   LatLng currentPosition;
-  String currentAdress;
+  String currentAddress;
 
   @override
   void initState() {
@@ -56,7 +59,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _locationData = await location.getLocation();
     currentPosition = LatLng(_locationData.latitude, _locationData.longitude);
-    currentAdress = await getAdress(currentPosition);
+    currentAddress = await getAdress(currentPosition);
     setState(() {
       isloading = false;
     });
@@ -68,6 +71,40 @@ class _MapScreenState extends State<MapScreen> {
     final addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     return addresses.first.addressLine;
+  }
+
+  void request(LatLng pos, String address) async {
+    if (mounted)
+      setState(() {
+        currentPosition = pos;
+        currentAddress = address;
+        isloading = true;
+      });
+    bool error = await Provider.of<UserProvider>(context, listen: false)
+        .getUserLocation(currentPosition, currentAddress);
+    if (!error) {
+      if (mounted)
+        setState(() {
+          print('done');
+          isloading = false;
+        });
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error has occurred'),
+          content: Text('Please try again later'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Ok')),
+          ],
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+    }
   }
 
   @override
@@ -123,7 +160,7 @@ class _MapScreenState extends State<MapScreen> {
                           });
                         },
                         onCameraIdle: () async {
-                          currentAdress = await getAdress(currentPosition);
+                          currentAddress = await getAdress(currentPosition);
                           setState(() {});
                         },
                       ),
@@ -160,7 +197,7 @@ class _MapScreenState extends State<MapScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       title: Text(
-                        '$currentAdress',
+                        '$currentAddress',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -180,6 +217,7 @@ class _MapScreenState extends State<MapScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.red[900]),
                 onPressed: () {
+                  request(currentPosition, currentAddress);
                   Navigator.pushReplacementNamed(
                       context, PaymentScreen.routeName);
                 },

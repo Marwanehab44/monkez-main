@@ -3,11 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AuthTitle extends StatelessWidget {
   final String title;
-  AuthTitle(key,this.title):super(key:key);
+
+  AuthTitle(key, this.title) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -16,10 +17,7 @@ class AuthTitle extends StatelessWidget {
             color: Colors.black,
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            
-            
           ),
-          
         ),
         Text(
           'your Account',

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -51,8 +52,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProfile(
-      File image, String userName, String mobileNumber,LatLng position,String address) async {
+  Future<bool> updateProfile(File image, String userName, String mobileNumber) async {
     try {
       String userId = FirebaseAuth.instance.currentUser.uid;
       String email = FirebaseAuth.instance.currentUser.email;
@@ -66,9 +66,6 @@ class UserProvider with ChangeNotifier {
           'username': userName,
           'mobileNumber': mobileNumber,
           'photoUrl': photoUrl,
-          'lat':position.latitude,
-          'lng':position.longitude,
-          'address':address,
         },
       );
       return true;
@@ -79,12 +76,15 @@ class UserProvider with ChangeNotifier {
 
   Future<bool> completeProfile() async {
     try {
-      String userId=FirebaseAuth.instance.currentUser.uid;
-      final document =await FirebaseFirestore.instance.collection('users').doc(userId).get();
-      if(document.exists){
+      String userId = FirebaseAuth.instance.currentUser.uid;
+      final document = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      if (document.exists) {
         //load data
         return true;
-      }else{
+      } else {
         return false;
       }
     } catch (e) {
@@ -92,5 +92,18 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool>getUserLocation()
+  Future<bool> getUserLocation(LatLng position, String address) async {
+    try {
+      String email = FirebaseAuth.instance.currentUser.email;
+      String userId = FirebaseAuth.instance.currentUser.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'lat': position.latitude,
+        'lng': position.longitude,
+        'address': address,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

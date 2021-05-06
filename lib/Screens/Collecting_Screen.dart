@@ -37,14 +37,10 @@ class _CollectingDataState extends State<CollectingData> {
     super.dispose();
   }
 
-  void submit(LatLng pos,String address) async {
-    setState(() {
-      currentCoordinates=pos;
-      currentAddress=address;
-      loading = true;
-    });
+  void submit() async {
+
     bool error = await Provider.of<UserProvider>(context, listen: false)
-        .updateProfile(pickedImage, name, number, currentCoordinates,currentAddress);
+        .updateProfile(pickedImage, name, number);
     if (!error) {
       setState(() {
         loading = false;

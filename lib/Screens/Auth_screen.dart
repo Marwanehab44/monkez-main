@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 import 'package:monkez/widgets/auth-widgets/auth_background.dart';
 import 'package:monkez/widgets/auth-widgets/auth_form.dart';
 import 'package:monkez/widgets/auth-widgets/reset_password_form.dart';
@@ -17,7 +15,6 @@ class _HomeState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
-
     forgotPass = false;
   }
 
