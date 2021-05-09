@@ -55,122 +55,123 @@ class _CollectingFirstState extends State<CollectingFirst> {
     return Column(
       children: [
         Expanded(
-            flex: 9,
-            child: Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CollectingDataTitle(
-                    "Welcome",
-                    "Few steps to complete your profile.",
-                  ),
-                  SizedBox(
-                    height: 120,
-                  ),
-                  ImageFrame.fromFile(image),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      RaisedButton.icon(
-                        color: Colors.black,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        elevation: 5,
-                        icon: Icon(
-                          Icons.photo_library_rounded,
-                          color: Colors.red,
-                        ),
-                        label: Text(
-                          'Gallery',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          pickImage(true);
-                        },
+          flex: 9,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CollectingDataTitle(
+                  "Welcome",
+                  "Few steps to complete your profile.",
+                ),
+                SizedBox(
+                  height: 120,
+                ),
+                ImageFrame.fromFile(image),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton.icon(
+                      color: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 5,
+                      icon: Icon(
+                        Icons.photo_library_rounded,
+                        color: Colors.red,
                       ),
-                      RaisedButton.icon(
-                        color: Colors.black,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        elevation: 5,
-                        icon: Icon(
-                          Icons.camera_alt,
+                      label: Text(
+                        'Gallery',
+                        style: TextStyle(
                           color: Colors.red,
+                          fontWeight: FontWeight.bold,
                         ),
-                        label: Text(
-                          'Camera',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onPressed: () {
-                          pickImage(false);
-                        },
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        userName = value;
-                      });
-                    },
-                    maxLines: 1,
-                    maxLength: 15,
-                    textInputAction: TextInputAction.next,
-                    onSubmitted: (value) => mobileNode.requestFocus(),
-                    decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 2,
-                          ),
-                        ),
-                        labelText: 'User Name',
-                        labelStyle: TextStyle(
+                      onPressed: () {
+                        pickImage(true);
+                      },
+                    ),
+                    RaisedButton.icon(
+                      color: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 5,
+                      icon: Icon(
+                        Icons.camera_alt,
+                        color: Colors.red,
+                      ),
+                      label: Text(
+                        'Camera',
+                        style: TextStyle(
+                          color: Colors.red,
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          fontFamily: 'AkayaKanadaka',
                         ),
-                        hintText: 'example: Mohamed '),
-                  ),
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        mobileNumber = value;
-                      });
-                    },
-                    focusNode: mobileNode,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 2,
-                          ),
+                      ),
+                      onPressed: () {
+                        pickImage(false);
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      userName = value;
+                    });
+                  },
+                  maxLines: 1,
+                  maxLength: 15,
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (value) => mobileNode.requestFocus(),
+                  decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 2,
                         ),
-                        labelText: 'Mobile Number',
-                        labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          fontFamily: 'AkayaKanadaka',
+                      ),
+                      labelText: 'User Name',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        fontFamily: 'AkayaKanadaka',
+                      ),
+                      hintText: 'example: Mohamed '),
+                ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      mobileNumber = value;
+                    });
+                  },
+                  focusNode: mobileNode,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 2,
                         ),
-                        hintText: 'example: 01xxxxxxxxx '),
-                  ),
-                ],
-              ),
-            )),
+                      ),
+                      labelText: 'Mobile Number',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        fontFamily: 'AkayaKanadaka',
+                      ),
+                      hintText: 'example: 01xxxxxxxxx '),
+                ),
+              ],
+            ),
+          ),
+        ),
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

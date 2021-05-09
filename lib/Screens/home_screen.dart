@@ -12,12 +12,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool help;
 
   @override
   void initState() {
     super.initState();
-    help = false;
   }
 
   @override

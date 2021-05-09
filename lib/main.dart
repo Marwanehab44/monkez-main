@@ -9,7 +9,10 @@ import 'package:monkez/Screens/Map-Screen.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
+import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/collecting_driver_screen.dart';
 import 'package:monkez/Screens/home_screen.dart';
+import 'package:monkez/Screens/pre_collecting.dart';
+import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/transit_driver_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -52,6 +55,9 @@ class MyApp extends StatelessWidget {
           MapScreen.routeName: (context) => MapScreen(),
           PaymentScreen.routeName: (context) => PaymentScreen(),
           ExisitingCard.routeName: (context) => ExisitingCard(),
+          PreCollecting.routeName: (context) => PreCollecting(),
+          CollectingDriverScreen.routeName: (context) => CollectingDriverScreen(),
+          TransitDriverScreen.routName: (context) => TransitDriverScreen(),
         },
       ),
     );

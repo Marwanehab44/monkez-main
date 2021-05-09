@@ -348,7 +348,7 @@ class _AuthFormState extends State<AuthForm> {
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline),
                               ),
-                            )
+                            ),
                           ],
                         )
                       : Row(

@@ -52,7 +52,8 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProfile(File image, String userName, String mobileNumber) async {
+  Future<bool> updateProfile(
+      File image, String userName, String mobileNumber) async {
     try {
       String userId = FirebaseAuth.instance.currentUser.uid;
       String email = FirebaseAuth.instance.currentUser.email;
@@ -106,4 +107,62 @@ class UserProvider with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> driverProfile(
+      File photo, String name, String mobNumber, String age, String id) async {
+    try {
+      String userId = FirebaseAuth.instance.currentUser.uid;
+      String email = FirebaseAuth.instance.currentUser.email;
+      final ref = FirebaseStorage.instance
+          .ref('drivers/$userId.${photo.path.split('.').last}');
+      await ref.putFile(photo);
+      String photoUrl = await ref.getDownloadURL();
+      await FirebaseFirestore.instance.collection('drivers').doc(userId).set(
+        {
+          'email': email,
+          'username': name,
+          'mobileNumber': mobNumber,
+          'photoUrl': photoUrl,
+          'Age': age,
+          'National Identification Number': id,
+        },
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> completeDriverProfile() async {
+    try {
+      String userId = FirebaseAuth.instance.currentUser.uid;
+      final document = await FirebaseFirestore.instance
+          .collection('drivers')
+          .doc(userId)
+          .get();
+      if (document.exists) {
+        //load data
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+ /* Future<bool> getDriverLocation(LatLng position, String address) async {
+    try {
+      String email = FirebaseAuth.instance.currentUser.email;
+      String userId = FirebaseAuth.instance.currentUser.uid;
+      await FirebaseFirestore.instance.collection('drivers').doc(userId).update({
+        'lat': position.latitude,
+        'lng': position.longitude,
+        'address': address,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }*/
 }

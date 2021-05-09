@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
-import 'package:monkez/Screens/Transit_Screen.dart';
-import 'package:monkez/widgets/collecting-widgets/collecting-first.dart';
-import 'package:monkez/widgets/collecting-widgets/collecting-second.dart';
+import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/transit_driver_screen.dart';
+import 'package:monkez/widgets/driver-widgets/collecting_first_driver.dart';
+import 'package:monkez/widgets/driver-widgets/collecting_second_driver.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:provider/provider.dart';
 
-class CollectingData extends StatefulWidget {
-  static const String routeName = '/collecting';
+class CollectingDriverScreen extends StatefulWidget {
+  static const String routeName = '/driverCollecting';
 
   @override
-  _CollectingDataState createState() => _CollectingDataState();
+  _CollectingDriverScreenState createState() => _CollectingDriverScreenState();
 }
 
-class _CollectingDataState extends State<CollectingData> {
-  String currentAddress,name, number;
+class _CollectingDriverScreenState extends State<CollectingDriverScreen> {
+  String currentAddress, name, mobNumber, age, egyId;
   LatLng currentCoordinates;
   File pickedImage;
   PageController controller;
@@ -38,9 +38,8 @@ class _CollectingDataState extends State<CollectingData> {
   }
 
   void submit() async {
-
     bool error = await Provider.of<UserProvider>(context, listen: false)
-        .updateProfile(pickedImage, name, number);
+        .driverProfile(pickedImage, name, mobNumber, age, egyId);
     if (!error) {
       setState(() {
         loading = false;
@@ -48,7 +47,7 @@ class _CollectingDataState extends State<CollectingData> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error has occurred'), 
+          title: Text('Error has occurred'),
           content: Text('Please try again later'),
           actions: [
             TextButton(
@@ -60,7 +59,7 @@ class _CollectingDataState extends State<CollectingData> {
         ),
       );
     } else {
-      Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+      Navigator.of(context).pushReplacementNamed(TransitDriverScreen.routName);
     }
   }
 
@@ -102,13 +101,17 @@ class _CollectingDataState extends State<CollectingData> {
     return action;
   }
 
-  void nextPage(File image, String userName, String mobNum) {
+  void nextPage(
+      File photo, String drivName, String mobNumber, String age, String egyId) {
     setState(() {
-      this.pickedImage = image;
-      this.name = userName;
-      this.number = mobNum;
+      this.pickedImage = photo;
+      this.name = drivName;
+      this.mobNumber = mobNumber;
+      this.age = age;
+      this.egyId = egyId;
     });
-    controller.nextPage(duration: Duration(seconds: 1), curve: Curves.linear);
+    controller.nextPage(
+        duration: Duration(seconds: 1), curve: Curves.easeOutQuad);
   }
 
   @override
@@ -128,7 +131,6 @@ class _CollectingDataState extends State<CollectingData> {
       child: Scaffold(
         body: Stack(
           children: [
-
             Container(
               height: height,
               width: width,
@@ -137,22 +139,28 @@ class _CollectingDataState extends State<CollectingData> {
                 child: Container(
                   height: height - MediaQuery.of(context).padding.top - 20,
                   width: width,
-                  child: PageIndicatorContainer(
-                    length: 2,
-                    padding: EdgeInsets.only(bottom: 30),
-                    indicatorColor: Colors.grey,
-                    indicatorSelectorColor: Colors.black,
-                    shape: IndicatorShape.roundRectangleShape(
-                      size: Size(20, 5),
-                      cornerSize: Size.square(20),
-                    ),
-                    child: PageView(
-                      controller: controller,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        CollectingFirst(logout, nextPage),
-                        CollectingSecond(pickedImage, name, number, submit),
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: PageIndicatorContainer(
+                      length: 2,
+                      align: IndicatorAlign.top,
+                      indicatorSpace: 5,
+                      padding: EdgeInsets.only(bottom: 30),
+                      indicatorColor: Colors.grey,
+                      indicatorSelectorColor: Colors.black,
+                      shape: IndicatorShape.roundRectangleShape(
+                        size: Size(20, 5),
+                        cornerSize: Size.square(20),
+                      ),
+                      child: PageView(
+                        controller: controller,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          CollectingFirstDriver(logout, nextPage),
+                          CollectingSecondDriver(
+                              pickedImage, name, mobNumber, age, egyId, submit),
+                        ],
+                      ),
                     ),
                   ),
                 ),
