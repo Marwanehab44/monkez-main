@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monkez/Providers/user_Provider.dart';
+import 'package:monkez/Screens/Collecting_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/Screens/pre_collecting.dart';
@@ -18,7 +19,7 @@ class TransitScreen extends StatelessWidget {
         } else if (snapshot.data == true) {
           return HomeScreen();
         } else {
-          return PreCollecting();
+          return CollectingData();
         }
       },
     );

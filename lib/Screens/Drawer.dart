@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
+import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user=Provider.of<UserProvider>(context).currentUser;
     return Drawer(
       child: SafeArea(
         child: Container(

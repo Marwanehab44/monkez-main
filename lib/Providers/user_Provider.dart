@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserProvider with ChangeNotifier {
+  var currentUser;
+
   Future<String> login(String email, String password) async {
     try {
       await FirebaseAuth.instance
@@ -83,7 +85,6 @@ class UserProvider with ChangeNotifier {
           .doc(userId)
           .get();
       if (document.exists) {
-        //load data
         return true;
       } else {
         return false;
@@ -151,7 +152,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
- /* Future<bool> getDriverLocation(LatLng position, String address) async {
+/* Future<bool> getDriverLocation(LatLng position, String address) async {
     try {
       String email = FirebaseAuth.instance.currentUser.email;
       String userId = FirebaseAuth.instance.currentUser.uid;

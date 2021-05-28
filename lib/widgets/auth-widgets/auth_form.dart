@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
+import 'package:monkez/Screens/beforeTransitScreen.dart';
 import 'package:monkez/widgets/auth-widgets/auth_title.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +62,7 @@ class _AuthFormState extends State<AuthForm> {
       String error = await Provider.of<UserProvider>(context, listen: false)
           .login(email, password);
       if (error == null) {
-        Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+        Navigator.of(context).pushReplacementNamed(BeforeTransite.routeName);
       } else {
         setState(() {
           loading = false;
@@ -79,7 +80,7 @@ class _AuthFormState extends State<AuthForm> {
       String error = await Provider.of<UserProvider>(context, listen: false)
           .register(email, password);
       if (error == null) {
-        Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+        Navigator.of(context).pushReplacementNamed(BeforeTransite.routeName);
       } else {
         setState(() {
           loading = false;
