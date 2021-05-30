@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
+import 'package:monkez/Screens/Driver/collecting_driver_screen.dart';
+import 'package:monkez/Screens/Driver/transit_driver_screen.dart';
 import 'package:monkez/Screens/Exisiting_Card.dart';
 import 'package:monkez/Screens/Map-Screen.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
@@ -14,8 +16,7 @@ import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/Screens/pre_collecting.dart';
 import 'package:provider/provider.dart';
 
-import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/collecting_driver_screen.dart';
-import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/transit_driver_screen.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
             } else if (FirebaseAuth.instance.currentUser != null) {
-              return TransitScreen();
+              return BeforeTransite();
             } else {
               return AuthScreen();
             }

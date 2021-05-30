@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
-import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/collecting_driver_screen.dart';
+import 'package:monkez/Screens/Driver/collecting_driver_screen.dart';
+
 
 class PreCollecting extends StatelessWidget {
   static const String routeName = '/preCollecting';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Driver/collecting_driver_screen.dart';
+import 'package:monkez/Screens/Driver/map_screen_driver.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/Screens/pre_collecting.dart';
@@ -18,7 +19,7 @@ class TransitDriverScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SplashScreen();
         } else if (snapshot.data == true) {
-          return HomeScreen();
+          return MapScreenDriver();
         } else {
           return CollectingDriverScreen();
         }

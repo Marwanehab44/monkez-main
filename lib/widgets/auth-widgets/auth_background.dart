@@ -10,19 +10,19 @@ class AuthBackground extends StatelessWidget {
         Container(
           height: double.infinity,
           width: double.infinity,
-         /* decoration: BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
                 image:
                     AssetImage('assets/images/Medicaid-Hospital-Emergency.jpg'),
                 fit: BoxFit.cover),
-          ),*/
-          decoration: BoxDecoration(
+          ),
+         /* decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: GradientColors.piggyPink,
                 stops: [0.3, 0.9]),
-          ),
+          ),*/
         ),
         Container(
           width: double.infinity,
