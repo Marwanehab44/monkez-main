@@ -218,8 +218,8 @@ class _MapScreenState extends State<MapScreen> {
                 style: ElevatedButton.styleFrom(primary: Colors.red[900]),
                 onPressed: () {
                   request(currentPosition, currentAddress);
-                  Navigator.pushReplacementNamed(
-                      context, PaymentScreen.routeName);
+                 
+                    Provider.of<UserProvider>(context, listen: false).getDriver();
                 },
                 child: Padding(
                   padding: EdgeInsets.all(15.0),

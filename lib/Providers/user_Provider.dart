@@ -1,10 +1,11 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
 
 class UserProvider with ChangeNotifier {
   var currentUser;
@@ -17,9 +18,9 @@ class UserProvider with ChangeNotifier {
     } catch (e) {
       switch (e.code) {
         case 'wrong-password':
-          return 'wrong password.';
+          return 'invalid email or password.';
         case 'invalid-email':
-          return 'invalid email.';
+          return 'invalid email or password.';
         case 'user-disabled':
           return 'This user has been disabled.';
         default:
@@ -147,6 +148,50 @@ class UserProvider with ChangeNotifier {
       } else {
         return false;
       }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> getDriver() async {
+    try {
+      String userId = FirebaseAuth.instance.currentUser.uid;
+
+      var driver;
+
+      await FirebaseFirestore.instance
+          .collection("drivers")
+          .limit(1)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          driver = result.data();
+        });
+        print(driver['username']);
+        print(driver['mobileNumber']);
+        
+          final body = {
+            'notification': {'body': 'address', 'title': 'new request'},
+            'priority': 'high',
+            'data': {
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              "id": "1",
+              "status": "done"
+            },
+            'to': driver['fcmToken'],
+            //'/topics/123'
+          };
+          http.post(
+            Uri.parse('https://fcm.googleapis.com/fcm/send'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization':
+                  'key=AAAAvBZZx-w:APA91bHP-rIJkOl6jn2yP6mBqGp-7wVawxktKp3IUzpELBV2fH9TUvGwFwjWr8Ut2DT2rU0NQUhshhfYy4BGwuiruBYdszg59Qq02KINDpRD46dHnMs6Qhuusi9LdkaoNvrKEqZIQmwX',
+            },
+            body: jsonEncode(body),
+          );
+        
+      });
     } catch (e) {
       return false;
     }

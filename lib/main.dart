@@ -11,15 +11,15 @@ import 'package:monkez/Screens/Map-Screen.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
-import 'package:monkez/Screens/beforeTransitScreen.dart';
 import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/Screens/pre_collecting.dart';
 import 'package:provider/provider.dart';
 
-
+import 'Screens/beforeTransitScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 

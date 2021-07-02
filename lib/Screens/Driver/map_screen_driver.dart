@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
@@ -26,10 +29,26 @@ class _MapScreenState extends State<MapScreenDriver> {
   LatLng currentPosition;
   String currentAddress;
 
+  void saveDriverToken()async{
+    String fcmToken = await  FirebaseMessaging.instance.getToken();
+
+    //Save it to Firestore
+   if (fcmToken != null) {
+       String userId = FirebaseAuth.instance.currentUser.uid;
+       await FirebaseFirestore.instance.collection('drivers').doc(userId).update(
+        {
+          'fcmToken': fcmToken,
+          
+        },
+      );
+   }
+  }
+
   @override
   void initState() {
     super.initState();
     isloading = true;
+    saveDriverToken();
   }
 
   @override
