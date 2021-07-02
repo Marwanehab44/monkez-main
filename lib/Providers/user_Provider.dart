@@ -94,9 +94,10 @@ class UserProvider with ChangeNotifier {
       return false;
     }
   }
-
+String addressUser;
   Future<bool> getUserLocation(LatLng position, String address) async {
     try {
+
       String email = FirebaseAuth.instance.currentUser.email;
       String userId = FirebaseAuth.instance.currentUser.uid;
       await FirebaseFirestore.instance.collection('users').doc(userId).update({
@@ -153,7 +154,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getDriver() async {
+  Future<bool> getDriver(String address) async {
     try {
       String userId = FirebaseAuth.instance.currentUser.uid;
 
@@ -169,9 +170,9 @@ class UserProvider with ChangeNotifier {
         });
         print(driver['username']);
         print(driver['mobileNumber']);
-        
+        print(driver['fcmToken']);
           final body = {
-            'notification': {'body': 'address', 'title': 'new request'},
+            'notification': {'body': address, 'title': 'new request'},
             'priority': 'high',
             'data': {
               'click_action': 'FLUTTER_NOTIFICATION_CLICK',
@@ -193,6 +194,7 @@ class UserProvider with ChangeNotifier {
         
       });
     } catch (e) {
+      print(e);
       return false;
     }
   }

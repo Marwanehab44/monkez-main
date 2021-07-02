@@ -1,3 +1,4 @@
+import 'package:fcm_config/fcm_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,13 @@ import 'package:monkez/Screens/pre_collecting.dart';
 import 'package:provider/provider.dart';
 
 import 'Screens/beforeTransitScreen.dart';
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  PaymentScreen();
+}
 
-void main() {
+void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await FCMConfig.instance.init(onBackgroundMessage:_firebaseMessagingBackgroundHandler);
   runApp(MyApp());
 }
 

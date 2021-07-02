@@ -219,7 +219,7 @@ class _MapScreenState extends State<MapScreen> {
                 onPressed: () {
                   request(currentPosition, currentAddress);
                  
-                    Provider.of<UserProvider>(context, listen: false).getDriver();
+                    Provider.of<UserProvider>(context, listen: false).getDriver(currentAddress);
                 },
                 child: Padding(
                   padding: EdgeInsets.all(15.0),

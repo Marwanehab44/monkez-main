@@ -40,7 +40,7 @@ dependencies:
   location: ^4.1.1
   geocoder: ^0.2.1
   shimmer: ^2.0.0
-  firebase_messaging: ^10.0.3
+  fcm_config: ^3.0.7
   http: ^0.13.3
 
 
