@@ -42,6 +42,7 @@ dependencies:
   shimmer: ^2.0.0
   fcm_config: ^3.0.7
   http: ^0.13.3
+  flutter_local_notifications: ^6.0.0
 
 
 

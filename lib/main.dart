@@ -6,6 +6,7 @@ import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
 import 'package:monkez/Screens/Driver/collecting_driver_screen.dart';
+import 'package:monkez/Screens/Driver/map_screen_driver.dart';
 import 'package:monkez/Screens/Driver/transit_driver_screen.dart';
 import 'package:monkez/Screens/Exisiting_Card.dart';
 import 'package:monkez/Screens/Map-Screen.dart';
@@ -27,8 +28,31 @@ void main()async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        Navigator.of(context).pushReplacementNamed(MapScreenDriver.routeName);
+      }
+    });
+
+
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      Navigator.of(context).pushReplacementNamed(MapScreenDriver.routeName);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
