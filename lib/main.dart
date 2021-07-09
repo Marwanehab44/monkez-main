@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Collecting_Screen.dart';
+import 'package:monkez/Screens/Driver/Driver%20Profile.dart';
 import 'package:monkez/Screens/Driver/collecting_driver_screen.dart';
 import 'package:monkez/Screens/Driver/transit_driver_screen.dart';
 import 'package:monkez/Screens/Exisiting_Card.dart';
@@ -12,6 +13,7 @@ import 'package:monkez/Screens/Map-Screen.dart';
 import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/SplashScreen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
+import 'package:monkez/Screens/UserProfile.dart';
 import 'package:monkez/Screens/home_screen.dart';
 import 'package:monkez/Screens/pre_collecting.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +69,8 @@ class MyApp extends StatelessWidget {
               CollectingDriverScreen(),
           TransitDriverScreen.routName: (context) => TransitDriverScreen(),
           BeforeTransite.routeName: (context) => BeforeTransite(),
+          UserProfile.routeName:(context)=>UserProfile(),
+          DriverProfile.routeName:(context)=>DriverProfile(),
         },
       ),
     );

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,11 +10,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:monkez/Providers/user_Provider.dart';
-import 'package:monkez/Screens/Drawer.dart';
-import 'package:monkez/Screens/Payment_Screen.dart';
-import 'package:monkez/Screens/Transit_Screen.dart';
-import 'package:provider/provider.dart';
+import 'package:monkez/Screens/Driver/DrawerDriver.dart';
 
 class MapScreenDriver extends StatefulWidget {
   static const routeName = '/map-screen-driver';
@@ -27,7 +22,7 @@ class MapScreenDriver extends StatefulWidget {
 class _MapScreenState extends State<MapScreenDriver> {
   bool isloading;
   LatLng currentPosition;
-  String currentAddress;
+  String currentAddress='';
 
   void saveDriverToken()async{
     String fcmToken = await  FirebaseMessaging.instance.getToken();
@@ -92,39 +87,39 @@ class _MapScreenState extends State<MapScreenDriver> {
     return addresses.first.addressLine;
   }
 
-  void request(LatLng pos, String address) async {
-    if (mounted)
-      setState(() {
-        currentPosition = pos;
-        currentAddress = address;
-        isloading = true;
-      });
-    bool error = await Provider.of<UserProvider>(context, listen: false)
-        .getUserLocation(currentPosition, currentAddress);
-    if (!error) {
-      if (mounted)
-        setState(() {
-          print('done');
-          isloading = false;
-        });
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error has occurred'),
-          content: Text('Please try again later'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Ok')),
-          ],
-        ),
-      );
-    } else {
-      Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
-    }
-  }
+  // void request(LatLng pos, String address) async {
+  //   if (mounted)
+  //     setState(() {
+  //       currentPosition = pos;
+  //       currentAddress = address;
+  //       isloading = true;
+  //     });
+  //   bool error = await Provider.of<UserProvider>(context, listen: false)
+  //       .getUserLocation(currentPosition, currentAddress);
+  //   if (!error) {
+  //     if (mounted)
+  //       setState(() {
+  //         print('done');
+  //         isloading = false;
+  //       });
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: Text('Error has occurred'),
+  //         content: Text('Please try again later'),
+  //         actions: [
+  //           TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text('Ok')),
+  //         ],
+  //       ),
+  //     );
+  //   } else {
+  //     Navigator.of(context).pushReplacementNamed(TransitScreen.routName);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +138,7 @@ class _MapScreenState extends State<MapScreenDriver> {
               fontFamily: 'Quicksand'),
         ),
       ),
-      drawer: MainDrawer(),
+      drawer: DrawerDriver(),
       body: Container(
         height: double.infinity,
         width: double.infinity,

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:monkez/Providers/user_Provider.dart';
-import 'package:monkez/Screens/Transit_Screen.dart';
 import 'package:monkez/Screens/beforeTransitScreen.dart';
 import 'package:monkez/widgets/auth-widgets/auth_title.dart';
 import 'package:provider/provider.dart';

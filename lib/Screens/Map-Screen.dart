@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
@@ -10,7 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Drawer.dart';
-import 'package:monkez/Screens/Payment_Screen.dart';
 import 'package:monkez/Screens/Transit_Screen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   bool isloading;
   LatLng currentPosition;
-  String currentAddress;
+  String currentAddress='';
 
   @override
   void initState() {
@@ -35,6 +34,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
+    setState(() {
+      isloading = true;
+    });
     Location location = new Location();
 
     bool _serviceEnabled;
@@ -63,6 +65,7 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       isloading = false;
     });
+    print(isloading);
   }
 
   Future<String> getAdress(currentPosition) async {
@@ -218,8 +221,9 @@ class _MapScreenState extends State<MapScreen> {
                 style: ElevatedButton.styleFrom(primary: Colors.red[900]),
                 onPressed: () {
                   request(currentPosition, currentAddress);
-                 
-                    Provider.of<UserProvider>(context, listen: false).getDriver(currentAddress);
+
+                  Provider.of<UserProvider>(context, listen: false)
+                      .getDriver(currentAddress);
                 },
                 child: Padding(
                   padding: EdgeInsets.all(15.0),

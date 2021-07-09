@@ -1,12 +1,11 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class User {
+class UserData {
   String photoUrl, userName, userId, email, mobileNumber, address;
   LatLng position;
 
-  User.fromFirestore(this.userId, document)
-      : this.email = document['email'],
-        this.userName = document['userName'],
+  UserData.fromFirestore(this.userId, document, this.email)
+      : this.userName = document['userName'],
         this.address = document['address'],
         this.mobileNumber = document['mobileNumber'],
         this.photoUrl = document['photoUrl'],

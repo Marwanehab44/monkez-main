@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:monkez/Providers/user_Provider.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
 import 'package:monkez/Screens/Driver/transit_driver_screen.dart';
-//import 'file:///D:/My%20Projects/New%20folder/lib/Screens/Driver/transit_driver_screen.dart';
 import 'package:monkez/widgets/driver-widgets/collecting_first_driver.dart';
 import 'package:monkez/widgets/driver-widgets/collecting_second_driver.dart';
 import 'package:page_indicator/page_indicator.dart';

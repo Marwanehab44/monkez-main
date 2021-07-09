@@ -12,14 +12,11 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  var _value = false;
-  var _value2 = false;
-  bool checked;
+  int radioButton;
 
   @override
   void initState() {
     super.initState();
-    checked = false;
   }
 
   @override
@@ -59,8 +56,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, ExisitingCard.routeName);
+                            setState(() {
+                              Navigator.pushReplacementNamed(
+                                  context, ExisitingCard.routeName);
+                            });
                           },
                           child: ListTile(
                             title: Text(
@@ -83,8 +82,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, MapScreen.routeName);
+                            setState(() {
+                              Navigator.pushReplacementNamed(
+                                  context, MapScreen.routeName);
+                            });
                           },
                           child: ListTile(
                             title: Text(

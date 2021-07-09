@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gradient_colors/flutter_gradient_colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:monkez/Screens/Auth_screen.dart';
-import 'package:monkez/Screens/Payment_Screen.dart';
-import 'package:monkez/Screens/UserProfile.dart';
-import 'package:monkez/Screens/home_screen.dart';
+import 'package:monkez/Screens/Driver/Driver%20Profile.dart';
 
-class MainDrawer extends StatelessWidget {
+class DrawerDriver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -26,7 +24,7 @@ class MainDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome',
+                  'Welcome Captain',
                   style: TextStyle(
                     color: Colors.red[900],
                     fontWeight: FontWeight.bold,
@@ -46,42 +44,6 @@ class MainDrawer extends StatelessWidget {
                 Divider(
                   color: Colors.black,
                   thickness: 2,
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, HomeScreen.routeName);
-                  },
-                  title: Text(
-                    'Home',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  trailing: Icon(
-                    Icons.home,
-                    color: Colors.black,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, UserProfile.routeName);
-                  },
-                  title: Text(
-                    'Profile',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  trailing: Icon(FontAwesomeIcons.solidUserCircle,color: Colors.black,),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, PaymentScreen.routeName);
-                  },
-                  title: Text(
-                    'Payment',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  trailing: Icon(FontAwesomeIcons.moneyBillWave,color: Colors.black,),
                 ),
                 ListTile(
                   onTap: () {
